@@ -17,7 +17,7 @@ window.nodeHtmlParser = nodeHtmlParser;
  * @returns parser function
  */
 export default config => {
-    var TEXT_NODE = 'span';
+    // var TEXT_NODE = 'span';
     var c = config;
     var modelAttrStart = 'data-gjs-';
 
@@ -50,11 +50,11 @@ export default config => {
                     // so put it under try/catch and let fail silently
                     try {
                         value =
-                            (firstChar == '{' && lastChar == '}') ||
-                            (firstChar == '[' && lastChar == ']')
+                            (firstChar === '{' && lastChar === '}') ||
+                                (firstChar === '[' && lastChar === ']')
                                 ? JSON.parse(value)
                                 : value;
-                    } catch (e) {}
+                    } catch (e) { }
 
                     props[modelAttr] = value;
                 } else {
@@ -127,28 +127,28 @@ export default config => {
             return html;
         },
 
-//     quoteJsxExpresion(
-//         `
-// <Timer
-//   initialTime="{initialTime}"
-//   formatValue={(value) => \`\${(value) => < 10 ? \`0\${value}\` : value)}\`} direction={direction}
-//   formatValue2="{(value) => \`\${(value) => < 10 ? \`0\${value}\` : value)}\`}" direction="{direction}"
-//                         >
-//                         <span className="timer-days">
-//                             <Timer.Days/>{this.model.attributes.displayLabels ? " "+this.model.attributes.labels.labelDays+" " : ', '}
-//                         </span>
-//                         <span className="timer-hours">
-//                             <Timer.Hours/>{this.model.attributes.displayLabels ? " "+this.model.attributes.labels.labelHours+" " : ':'}
-//                         </span>
-//                             <span className="timer-minutes">
-//                             <Timer.Minutes/>{this.model.attributes.displayLabels ? " "+this.model.attributes.labels.labelMinutes+" " : ':'}
-//                         </span>
-//                             <span className="timer-seconds">
-//                             <Timer.Seconds/>{this.model.attributes.displayLabels ? " "+this.model.attributes.labels.labelSeconds : ''}
-//                         </span>
-//                         </Timer>
-// `
-//     );
+        //     quoteJsxExpresion(
+        //         `
+        // <Timer
+        //   initialTime="{initialTime}"
+        //   formatValue={(value) => \`\${(value) => < 10 ? \`0\${value}\` : value)}\`} direction={direction}
+        //   formatValue2="{(value) => \`\${(value) => < 10 ? \`0\${value}\` : value)}\`}" direction="{direction}"
+        //                         >
+        //                         <span className="timer-days">
+        //                             <Timer.Days/>{this.model.attributes.displayLabels ? " "+this.model.attributes.labels.labelDays+" " : ', '}
+        //                         </span>
+        //                         <span className="timer-hours">
+        //                             <Timer.Hours/>{this.model.attributes.displayLabels ? " "+this.model.attributes.labels.labelHours+" " : ':'}
+        //                         </span>
+        //                             <span className="timer-minutes">
+        //                             <Timer.Minutes/>{this.model.attributes.displayLabels ? " "+this.model.attributes.labels.labelMinutes+" " : ':'}
+        //                         </span>
+        //                             <span className="timer-seconds">
+        //                             <Timer.Seconds/>{this.model.attributes.displayLabels ? " "+this.model.attributes.labels.labelSeconds : ''}
+        //                         </span>
+        //                         </Timer>
+        // `
+        //     );
 
         /**
          * Unquote attributes containg JSX previously quoted using quoteJsxExpresionsInAttributes
@@ -218,10 +218,10 @@ export default config => {
             return result;
         },
 
-        toAttrArray(obj){
+        toAttrArray(obj) {
             var attrArr = [];
             Object.keys(obj).map(key => {
-                attrArr.push({'nodeName':key, 'nodeValue':obj[key]})
+                attrArr.push({ 'nodeName': key, 'nodeValue': obj[key] })
             })
             return attrArr;
         },
@@ -244,11 +244,11 @@ export default config => {
 
                 // Make attrs compatible with DOM representation
                 let attrs = [];
-                    attrs = (typeof node.attributes == 'object'
-                        ? this.toAttrArray(node.attributes)
-                        :  node.attributes)
-                        || []
-                    const attrsLen = attrs.length;
+                attrs = (typeof node.attributes === 'object'
+                    ? this.toAttrArray(node.attributes)
+                    : node.attributes)
+                    || []
+                const attrsLen = attrs.length;
                 const nodePrev = result[result.length - 1];
                 const nodeChild = node.childNodes.length;
                 const ct = this.compTypes;
@@ -296,16 +296,16 @@ export default config => {
                 for (let j = 0; j < attrsLen; j++) {
                     const nodeName = attrs[j].nodeName;
                     let nodeValue = attrs[j].nodeValue;
-                    // if (nodeName == "formatValue") {
+                    // if (nodeName === "formatValue") {
                     //     debugger;
                     // }
 
                     // Isolate attributes
-                    if (nodeName == 'style') {
+                    if (nodeName === 'style') {
                         model.style = this.parseStyle(nodeValue);
-                    } else if (nodeName == 'class') {
+                    } else if (nodeName === 'class') {
                         model.classes = this.parseClass(nodeValue);
-                    } else if (nodeName == 'contenteditable') {
+                    } else if (nodeName === 'contenteditable') {
                         continue;
                     } else if (nodeName.indexOf(modelAttrStart) === 0) {
                         const modelAttr = nodeName.replace(modelAttrStart, '');
@@ -320,11 +320,11 @@ export default config => {
                         // so put it under try/catch and let fail silently
                         try {
                             nodeValue =
-                                (firstChar == '{' && lastChar == '}') ||
-                                (firstChar == '[' && lastChar == ']')
+                                (firstChar === '{' && lastChar === '}') ||
+                                    (firstChar === '[' && lastChar === ']')
                                     ? JSON.parse(nodeValue)
                                     : nodeValue;
-                        } catch (e) {}
+                        } catch (e) { }
 
                         model[modelAttr] = nodeValue;
                     } else {
@@ -350,11 +350,11 @@ export default config => {
                 }
 
                 // Check if it's a text node and if could be moved to the prevous model
-                if (model.type == 'textnode') {
+                if (model.type === 'textnode') {
                     // this had to be added ...
                     model.content = node.nodeValue;
 
-                    if (nodePrev && nodePrev.type == 'textnode') {
+                    if (nodePrev && nodePrev.type === 'textnode') {
                         nodePrev.content += model.content;
                         continue;
                     }
@@ -362,7 +362,7 @@ export default config => {
                     // Throw away empty nodes (keep spaces)
                     if (!config.keepEmptyTextNodes) {
                         const content = node.nodeValue;
-                        if (content != ' ' && !content.trim()) {
+                        if (content !== ' ' && !content.trim()) {
                             continue;
                         }
                     }
@@ -387,7 +387,7 @@ export default config => {
                             break;
                         }
 
-                        if (cType == 'textnode') {
+                        if (cType === 'textnode') {
                             foundTextNode = 1;
                         }
                     }
@@ -398,7 +398,7 @@ export default config => {
                 }
 
                 // If tagName is still empty and is not a textnode, do not push it
-                if (!model.tagName && model.type != 'textnode') {
+                if (!model.tagName && model.type !== 'textnode') {
                     continue;
                 }
 
@@ -416,22 +416,22 @@ export default config => {
          *
          */
         parse(str, parserCss) {
-            console.log("html", str, parserCss);
+            // console.log("html", str, parserCss);
 
-            var config = (c.em && c.em.get('Config')) || {};
+            // var config = (c.em && c.em.get('Config')) || {};
             var res = { html: '', css: '' };
 
             var quoted = this.quoteJsxExpresionsInAttributes(str);
             let wrappedInDiv = false;
             // If starts with a tag, then pass it to nodeHtmlParser() as is, otherwise it is a text node, wrap it in a div.
             if (!quoted.startsWith('<')) {
-                quoted = '<div>'+quoted+'</div>';
+                quoted = '<div>' + quoted + '</div>';
                 wrappedInDiv = true;
             }
             const dom = nodeHtmlParser(quoted);
             var result = this.parseNode(dom);
 
-            if (result.length == 1) {
+            if (result.length === 1) {
                 result = result[0];
             }
 
