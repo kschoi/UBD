@@ -3,17 +3,17 @@
  */
 
 import {
-    timerRef
-} from './consts';
+  timerRef
+} from "../../constants";
 
 export default function (editor, opt = {}) {
-    const c = opt;
-    const bm = editor.BlockManager;
+  const c = opt;
+  const bm = editor.BlockManager;
 
-    // These are the styles that can be used both in the components and in the live view. See component.js onRender().
-    // These styles will also appear in the template's css.
-    // NOTE: only styles that have '.timer' in them will be put into the template's css.
-    const style = c.defaultStyle ? `<style>
+  // These are the styles that can be used both in the components and in the live view. See component.js onRender().
+  // These styles will also appear in the template's css.
+  // NOTE: only styles that have '.timer' in them will be put into the template's css.
+  const style = c.defaultStyle ? `<style>
     .timer {
       text-align: center;
       font-family: Helvetica, serif;
@@ -50,16 +50,14 @@ export default function (editor, opt = {}) {
     }
   </style>` : '';
 
-    bm.remove(timerRef);
-    // if (c.blocks.indexOf(timerRef) >= 0) {
-    bm.add(timerRef, {
-        label: c.blockLabel,
-        category: c.blockLabel,
-        attributes: {class: 'fa fa-clock-o'},
-        content: `
+  bm.remove(timerRef);
+  bm.add(timerRef, {
+    label: c.blockLabel,
+    category: c.blockCategory,
+    attributes: { class: 'fa fa-clock-o' },
+    content: `
         <div class="timer" data-gjs-type="${timerRef}"></div>
         ${style}
       `
-    });
-    // }
+  });
 }
