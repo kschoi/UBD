@@ -23,36 +23,18 @@
     "xregexp": "^4.2.4"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.11.0",
+    "@typescript-eslint/parser": "^2.11.0",
     "eslint": "^6.7.2",
     "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.7.0"
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "airbnb",
-      "prettier"
-    ],
-    "rules": {
-      "react/prefer-stateless-function": 0,
-      "react/jsx-filename-extension": 0,
-      "react/jsx-one-expression-per-line": 0,
-      "quotes": [
-        2,
-        "double",
-        {
-          "avoidEscape": true
-        }
-      ]
-    },
-    "env": {
-      "browser": true
-    }
   },
   "browserslist": {
     "production": [
